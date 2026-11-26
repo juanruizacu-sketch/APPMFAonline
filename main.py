@@ -31,9 +31,9 @@ class TipoTasa(str, Enum):
     descuento = "d"
 
 
-# ---------------------------------------------------------------------------
+
 # Modelos de respuesta
-# ---------------------------------------------------------------------------
+
 class BaseOut(BaseModel):
     formula: str
     tasa_cetes_28_pct: float
@@ -61,9 +61,9 @@ class DescuentoSimpleOut(BaseOut):
     valor_presente: float
 
 
-# ---------------------------------------------------------------------------
+
 # Inicio
-# ---------------------------------------------------------------------------
+
 @app.get("/", tags=["Inicio"])
 def home():
     return {
@@ -79,9 +79,9 @@ def home():
     }
 
 
-# ---------------------------------------------------------------------------
+
 # 1. Interés simple
-# ---------------------------------------------------------------------------
+
 @app.get("/calcular/interes-simple", response_model=InteresSimpleOut, tags=["Cálculos"],
          summary="Interés simple: M = C(1 + i·t)")
 def calcular_interes_simple(capital: Positivo, tiempo_anios: Positivo):
@@ -106,9 +106,9 @@ def calcular_interes_simple(capital: Positivo, tiempo_anios: Positivo):
     )
 
 
-# ---------------------------------------------------------------------------
+
 # 2. Perpetuidad vencida
-# ---------------------------------------------------------------------------
+
 @app.get("/calcular/perpetuidad-vencida", response_model=PerpetuidadOut, tags=["Cálculos"],
          summary="Perpetuidad vencida: VP = R / i  o  VP = R·(1-d)/d")
 def calcular_perpetuidad_vencida(pago: Positivo, tipo_tasa: TipoTasa = TipoTasa.interes):
@@ -139,9 +139,9 @@ def calcular_perpetuidad_vencida(pago: Positivo, tipo_tasa: TipoTasa = TipoTasa.
     )
 
 
-# ---------------------------------------------------------------------------
+
 # 3. Anualidad vencida geométrica
-# ---------------------------------------------------------------------------
+
 @app.get("/calcular/anualidad-vencida-geometrica", response_model=AnualidadGeometricaOut,
          tags=["Cálculos"], summary="Anualidad vencida geométrica (valor presente)")
 def calcular_anualidad_vencida_geometrica(
@@ -171,9 +171,9 @@ def calcular_anualidad_vencida_geometrica(
     )
 
 
-# ---------------------------------------------------------------------------
+
 # 4. Anualidad anticipada geométrica
-# ---------------------------------------------------------------------------
+
 @app.get("/calcular/anualidad-anticipada-geometrica", response_model=AnualidadGeometricaOut,
          tags=["Cálculos"], summary="Anualidad anticipada geométrica (valor presente)")
 def calcular_anualidad_anticipada_geometrica(
@@ -205,9 +205,9 @@ def calcular_anualidad_anticipada_geometrica(
     )
 
 
-# ---------------------------------------------------------------------------
+
 # 5. Descuento simple
-# ---------------------------------------------------------------------------
+
 @app.get("/calcular/descuento-simple", response_model=DescuentoSimpleOut, tags=["Cálculos"],
          summary="Descuento simple: VP = VF(1 - d·t)")
 def calcular_descuento_simple(valor_futuro: Positivo, tiempo_anios: Positivo):
